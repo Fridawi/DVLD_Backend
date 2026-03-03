@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="DVLD.API/DVLD.API.csproj" />
+  <Project Path="DVLD.CORE/DVLD.CORE.csproj" />
+  <Project Path="DVLD.INFRASTRUCTURE/DVLD.INFRASTRUCTURE.csproj" />
+  <Project Path="DVLD.SERVICES/DVLD.SERVICES.csproj" Id="3eadbd2f-a395-4988-be3d-28f23dd03bbc" />
+  <Project Path="DVLD.Tests/DVLD.Tests.csproj" Id="12ca2fbd-61cf-453d-904c-58cee94d7c4b" />
+</Solution>
