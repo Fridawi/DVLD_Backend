@@ -5,11 +5,12 @@ using DVLD.CORE.Interfaces.Licenses;
 using DVLD.CORE.Interfaces.Tests;
 using DVLD.CORE.Settings;
 using DVLD.INFRASTRUCTURE.Data;
+using DVLD.INFRASTRUCTURE.Data.Seeding;
 using DVLD.INFRASTRUCTURE.Repositories;
 using DVLD.INFRASTRUCTURE.Services;
 using DVLD.Services;
 using DVLD.Services.Mapping;
-using DVLD.SERVICES;
+using DVLD.SERVICES; 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.StaticFiles;
@@ -25,7 +26,7 @@ namespace DVLD.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
@@ -195,12 +196,25 @@ namespace DVLD.API
                 });
                 #endregion
 
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
                 app.UseCors("DvldApiCorsPolicy");
                 app.UseRateLimiter();
                 app.UseAuthentication();
                 app.UseAuthorization();
                 app.MapControllers();
+
+                #region Database Initialization & Seeding
+                using (var scope = app.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    var dbContext = services.GetRequiredService<AppDbContext>();
+
+                    await dbContext.Database.MigrateAsync();   // ← ينشئ القاعدة ويطبق كل الـ migrations
+
+                    await AdminSeeder.SeedAsync(services);
+                }
+                #endregion
+
 
                 app.Run();
             }

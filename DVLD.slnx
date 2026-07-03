@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".dockerignore" />
+    <File Path="Dockerfile" />
+  </Folder>
   <Project Path="DVLD.API/DVLD.API.csproj" />
   <Project Path="DVLD.CORE/DVLD.CORE.csproj" />
   <Project Path="DVLD.INFRASTRUCTURE/DVLD.INFRASTRUCTURE.csproj" />
